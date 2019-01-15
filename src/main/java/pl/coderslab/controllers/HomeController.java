@@ -1,0 +1,17 @@
+package pl.coderslab.controllers;
+
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class HomeController {
+
+//    @RequestMapping("app/login")
+//    @PreAuthorize("hasAnyRole('ADMIN')")
+//    public String loginPage(Model model){
+//
+//
+//    }
+}

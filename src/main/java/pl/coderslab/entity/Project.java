@@ -37,6 +37,6 @@ public class Project {
 
     private boolean active;
 
-    @OneToMany(mappedBy = "project")
+    @ManyToMany
     private List <User> users;
 }

@@ -1,12 +1,10 @@
 package pl.coderslab.entity;
-
-
 import lombok.*;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -19,6 +17,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
     @Column(unique = true)
@@ -39,13 +38,19 @@ public class User {
     @NotEmpty
     private String password;
 
-    private boolean enabled;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Project project;
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Project> project;
 
     @ManyToMany(mappedBy = "users")
     private List<Task> tasks;
+
+    private boolean active;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    @
+    private Set<Role> role;
 
     public User (User user){
         this.password = user.getPassword();
@@ -54,6 +59,6 @@ public class User {
         this.username = user.getUsername();
         this.login = user.getLogin();
         this.email = user.getEmail();
-        this.enabled = user.isEnabled();
+        this.role = user.getRole();
     }
 }

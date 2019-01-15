@@ -1,12 +1,9 @@
 package pl.coderslab.repository;
 
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import pl.coderslab.entity.Task;
 
-public interface TaskRepository {
+public interface TaskRepository extends JpaRepository<Task,Long> {
 
-    void add(Task task);
-    void edit(Task task);
-    Task findByTopic(String topic);
-    void removeByTopic(String topic);
 }

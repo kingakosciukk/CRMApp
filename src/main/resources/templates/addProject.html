@@ -17,26 +17,28 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-login">
-                <form id="login-form" method="post" th:action="@{'/login'}" role="form" style="display:block">
+            <div class="panel panel-project">
+                <form id="addproject-form" method="post" th:action="@{'/project/add'}" th:object="${project}" role="form" style="display:block">
                     <div class="form-group">
-                        <input th:field="*{login}" name="login" id="login" tabindex="1" class="form-control" placeholder="Login">
+                        <input th:field="*{name}" name="name" id="name" tabindex="1" class="form-control" placeholder="Name">
                     </div>
                     <div class="form-group">
-                        <input th:field="*{password}" type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+                        <input th:field="*{description}" name="description" id="description" tabindex="1" class="form-control" placeholder="Description">
+                    </div>
+                    <div class="form-group">
+                        <input th:field="*{website}" name="website" id="website" tabindex="1" class="form-control" placeholder="Website">
                     </div>
                     <div class="form-group">
                         <div class="row">
                             <div class="col-sm-6 col-sm-offset-3">
-                                <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Log in">
+                                <input type="submit" name="project-submit" id="project-submit" tabindex="4" class="form-control" value="Save project">
                             </div>
                         </div>
                     </div>
-
                 </form>
             </div>
         </div>
     </div>
 </div>
 </body>
-</html>>
+</html>

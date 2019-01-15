@@ -4,13 +4,14 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.entity.Role;
 import pl.coderslab.entity.User;
 import pl.coderslab.repository.UserRepository;
 
-import javax.validation.Valid;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 public class UserController {
@@ -20,8 +21,7 @@ public class UserController {
 
     @GetMapping(path="/registration")
     public String showRegistartionForm(Model model) {
-        final User user = new User();
-        model.addAttribute("user", user);
+        model.addAttribute("user", new User());
         return "registration";
     }
 
@@ -38,63 +38,17 @@ public class UserController {
 
             String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(10));
 
+            Set<Role> roles = new HashSet<>();
+            roles.add(Role.USER);
+            user.setActive(true);
             user.setPassword(hashedPassword);
             user.setUsername(name);
             user.setLogin(login);
             user.setSurname(surname);
-            user.setEnabled(true);
-            userRepository.add(user);
+            userRepository.save(user);
 
             return "success";
         }
         return "registration";
-    }
-
-    @GetMapping(path = "/user/list")
-    public String showAllUSers(Model model) {
-
-        Collection<User> users = userRepository.findAll();
-
-        model.addAttribute("users", users);
-        return "listUser";
-    }
-
-    @GetMapping(path = "/user/edit")
-    public String showEditForm(final @RequestParam(name = "id") Long id, final Model model) {
-
-        final User user = userRepository.findById(id);
-
-        model.addAttribute("user", user);
-        return "editUser";
-    }
-
-    @PostMapping(path = "/user/edit")
-    public String editBook(final @Valid User user, final BindingResult bresult) {
-
-        if(bresult.hasErrors()) {
-            return "editUser";
-        }
-
-        userRepository.edit(user);
-
-        return "redirect:list";
-    }
-
-    @GetMapping(path = "/user/remove")
-    public String showDeleteConfirmForm(final @RequestParam(name = "id") Long id, final Model model) {
-
-        final User user = userRepository.findById(id);
-
-        model.addAttribute("user", user);
-
-        return "removeUser";
-    }
-
-    @PostMapping(path = "/user/remove")
-    public String deleteBook(final @RequestParam(name = "id", required = true) Long id) {
-
-        userRepository.removeById(id);
-
-        return "redirect:list";
     }
 }
