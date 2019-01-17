@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+<th:block th:each="project : ${projects}">
+    <tr>
+        <td th:text="${project.name}">Project</td>
+        <td th:text="${project.description}">Description</td>
+        <td th:text="${project.website}">Description</td>
+        <td th:text="${project.created}">Created</td>
+    </tr>
+</th:block>
+</table>
+</body>
+</html>

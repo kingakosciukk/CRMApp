@@ -31,9 +31,7 @@ public class Project {
 
     @Column(name = "create_date")
     @CreationTimestamp
-    private Date date;
-
-    private String identifier;
+    private Date created;
 
     private boolean active;
 

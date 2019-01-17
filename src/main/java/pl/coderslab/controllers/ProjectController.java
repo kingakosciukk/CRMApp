@@ -9,6 +9,7 @@ import pl.coderslab.entity.User;
 import pl.coderslab.repository.ProjectRepository;
 import pl.coderslab.repository.UserRepository;
 
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -17,33 +18,38 @@ public class ProjectController {
     @Autowired
     ProjectRepository projectRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
     @GetMapping(path = "/project/add")
     public String showAddProjectsForm(Model model) {
         Project project = new Project();
         model.addAttribute("project", project);
-        return "addProject";
+        return "projectAdd";
     }
-//
-//    @RequestMapping(path = "/project/add", method = RequestMethod.POST)
-//    public String addProjectProcess (@ModelAttribute("project")Project project)(
-//
-//
-//    )
+    @RequestMapping(path="/project/add", method = RequestMethod.POST)
+    public String projectProccess(@ModelAttribute("project") Project project) {
+
+        String name = project.getName();
+        String desc = project.getDescription();
+        String website = project.getWebsite();
+        List<User> userproject = project.getUsers();
+        if (name != null && !name.isEmpty() && desc != null && !desc.isEmpty()
+                && website != null && !website.isEmpty()) {
+
+            project.setActive(true);
+            project.setDescription(desc);
+            project.setName(name);
+            project.setWebsite(website);
+            project.setUsers(userproject);
+            projectRepository.save(project);
+
+            return "success";
+        }
+        return "projectAdd";
+    }
 
     @GetMapping(path = "/project/list")
     public String showAllProjects(final Model model) {
-
-         List<Project> projects = projectRepository.findAll();
-
+        List<Project> projects = projectRepository.findAll();
         model.addAttribute("projects", projects);
-        return "project/listProject";
-    }
-    @ModelAttribute("user")
-    public List<User> user() {
-         List<User> user = userRepository.findAll();
-        return user;
+        return "projectList";
     }
 }

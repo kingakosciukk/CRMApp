@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Controller
-public class UserController {
+public class UserRegistrationController {
 
     @Autowired
     private UserRepository userRepository;
