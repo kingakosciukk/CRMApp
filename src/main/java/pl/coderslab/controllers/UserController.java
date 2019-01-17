@@ -10,7 +10,6 @@ import pl.coderslab.entity.User;
 import pl.coderslab.repository.UserRepository;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -40,6 +39,7 @@ public class UserController {
 
             Set<Role> roles = new HashSet<>();
             roles.add(Role.USER);
+            user.setRole(roles);
             user.setActive(true);
             user.setPassword(hashedPassword);
             user.setUsername(name);
@@ -51,4 +51,5 @@ public class UserController {
         }
         return "registration";
     }
+
 }
